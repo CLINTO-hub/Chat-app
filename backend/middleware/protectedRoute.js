@@ -3,13 +3,22 @@ import User from '../models/userModel.js'
 
 export const protectRoute = async(req,res,next)=>{
     try {
-        const token = req.cookies.jwt 
+        const authtoken = req.headers.authorization
 
-        if(!token){
+        
+
+       
+
+        if(!authtoken || !authtoken.startsWith('Bearer')){
             return res.status(401).json({error:"Unauthorized - No Token Provided"})
         }
 
+        const token = authtoken.split(' ')[1];
+        console.log('token',token);
+
         const decoded = jwt.verify(token,process.env.JWT_SECRET);
+
+        console.log('dee',decoded);
         if(!decoded){
             return res.status(401).json({error:"Unauthorized - Invalid Token Provided"})
 

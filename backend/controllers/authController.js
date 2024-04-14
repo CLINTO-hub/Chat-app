@@ -6,7 +6,7 @@ export const signup =  async(req,res)=>{
     try {
         const {email,username,password,confirmPassword,gender} = req.body
 
-        console.log(req.body);
+        
 
         if(password !==confirmPassword){
             return res.status(400).json({error:"Password doesn't match"})
@@ -18,7 +18,9 @@ export const signup =  async(req,res)=>{
         }
 
         const salt = await bcrypt.genSalt(10)
+        
         const hashPassword = await bcrypt.hash(password,salt)
+        
 
 
         const boyPic =  `https://avatar.iran.liara.run/public/boy?username=${username}`
@@ -33,23 +35,14 @@ export const signup =  async(req,res)=>{
             profilePic : gender === "male" ?boyPic : girlPic 
         })
 
-        if(newUser){
-          
-        await newUser.save()
+      await newUser.save()
+      res.status(200).json({success:true,message:"User sucessfully created"})
 
-        res.status(201).json({
-            _id:newUser._id,
-            username:newUser.username,
-            profilePic:newUser.profilePic
-        })
-    }else{
-        res.status(400).json({error:'invalid user data'});
     }
 
 
 
-
-    } catch (error) {
+ catch (error) {
 
         console.log(error.message);
         res.status(500).json({error:"Internal server Error"})
@@ -71,12 +64,14 @@ export const login = async(req,res)=>{
             return res.status(400).json({error:"Invalid username or password"})
         }
 
-        generateTokenAndSetCookie(user._id,res)
+       const token =  generateTokenAndSetCookie(user._id,res)
 
+       const userid = user._id
+       const image = user.profilePic
+       const username = user.username
+       
         res.status(200).json({
-            _id:user._id,
-            username:user.username,
-            profilePic:user.profilePic,
+           success:true,message:'Successfully login',token,userid,image,username
         })
 
         
