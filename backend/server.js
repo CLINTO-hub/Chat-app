@@ -26,9 +26,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors(corsOptions));
 
-app.get('/',(req,res)=>{
-    res.send('Sever is working')
-})
+
 
 app.use('/api/auth',authRouters);
 app.use('/api/messages',messageRouters);
