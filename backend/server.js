@@ -1,3 +1,4 @@
+import path from "path"
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
@@ -9,6 +10,7 @@ import connectDB from './db/connectDB.js'
 import { app, server } from './socket/Socket.js'
 
 
+const __dirname = path.resolve();
 
 dotenv.config()
 
@@ -31,6 +33,12 @@ app.get('/',(req,res)=>{
 app.use('/api/auth',authRouters);
 app.use('/api/messages',messageRouters);
 app.use('/api/users',userRouters);
+
+app.use(express.static(path.join(__dirname,'/frontend/dist')))
+
+app.get("*",(req,res)=>{
+    res.sendFile(path.join(__dirname,'frontend','dist','index.html'))
+})
 
 server.listen(PORT,()=>{
 connectDB();
