@@ -6,15 +6,20 @@ export const signup =  async(req,res)=>{
     try {
         const {email,username,password,confirmPassword,gender} = req.body
 
+        if(!email || !username || !password || !confirmPassword || !gender){
+            return res.status(400).json({message:"Please enter valid details"})
+        }
+       
+
         
 
         if(password !==confirmPassword){
-            return res.status(400).json({error:"Password doesn't match"})
+            return res.status(400).json({message:"Password doesn't match"})
         }
 
         const user = await User.findOne({email:email})
         if(user){
-            return res.status(400).json({error:"User already exists"})
+            return res.status(400).json({message:'User already exist'})
         }
 
         const salt = await bcrypt.genSalt(10)
@@ -57,12 +62,22 @@ export const login = async(req,res)=>{
 
         const{email,password} = req.body
 
+        if(!email,!password){
+            return res.status(400).json({message:"Please enter the email & password"})
+
+        }
+
         const user = await User.findOne({email:email})
+        if(!user){
+            return res.status(404).json({message:"User not found"})
+        }
         const isPasswordCorrect = await bcrypt.compare(password,user?.password)
 
-        if(!user || !isPasswordCorrect){
-            return res.status(400).json({error:"Invalid username or password"})
+        if(!isPasswordCorrect){
+            return res.status(400).json({status:false,message:"Password mismatch"});
         }
+
+       
 
        const token =  generateTokenAndSetCookie(user._id,res)
 

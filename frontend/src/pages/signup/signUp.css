@@ -1,0 +1,18 @@
+@media screen and (max-width: 768px) {
+    .w-full {
+        width: 90%; /* Adjust width for smaller screens */
+        max-width: 400px; /* Limit maximum width on small screens */
+    }
+    .p-6 {
+        padding: 2rem;
+    }
+    .text-3xl {
+        font-size: 2rem;
+    }
+    .label {
+        margin-top: 0.5rem;
+    }
+    .btn {
+        margin-top: 1rem;
+    }
+}

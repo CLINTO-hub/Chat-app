@@ -3,6 +3,7 @@ import { Link,useNavigate } from 'react-router-dom'
 import {toast} from 'react-toastify'
 import { BASE_URL } from '../../../config.js'
 import { useAuthContext } from '../../components/context/AuthContext.jsx'
+import '../login/Login.css'
 
 
 const Login = () => {
@@ -15,6 +16,8 @@ const Login = () => {
     const navigate = useNavigate()
 
     console.log(data);
+
+
 
     const handleSubmit = async(e)=>{
         e.preventDefault()
@@ -84,10 +87,10 @@ const Login = () => {
                             value={data.password}
                             onChange={(e)=>setData({...data,password:e.target.value})}/>
                     </div>
-                    <Link to='/signup' className='text-black text-sm hover:underline hover:text-blue-600 mt-2 inline-block'>
+                    <Link to='/signup' className='text-base text-sm hover:underline hover:text-blue-600 mt-2 inline-block'>
                     {"Don't"} have a account ?
                         </Link> 
-                        <button className='btn btn-block hover:bg-red-700'>Login</button>
+                        <button className='btn btn-block hover:bg-blue-700'>Login</button>
                 </form>
                 </div>
                 </div>

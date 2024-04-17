@@ -3,6 +3,7 @@ import GenderCheckbox from "./GendercheckBox";
 import {toast} from 'react-toastify'
 import { useState } from "react";
 import { BASE_URL } from "../../../config.js";
+import './signUp.css'
 
 
 const SignUp = () => {
@@ -34,11 +35,12 @@ const formSubmithandler=async(e)	=>{
 			body:JSON.stringify(input)
 		})
 
-		const {message} = await res.json()
+		const result = await res.json()
+		console.log(result);
 		if(!res.ok){
-			throw new Error(message)
+			throw new Error(result.message)
 		}
-		toast.success(message)
+		toast.success(result.message)
 		navigate('/login')
 		
 	} catch (error) {
@@ -101,7 +103,7 @@ const formSubmithandler=async(e)	=>{
 					</Link>
 
 					<div>
-						<button className='btn btn-block btn-sm mt-2 border border-slate-700 hover:bg-red-500'>Sign Up</button>
+						<button className='btn btn-block btn-sm mt-2 border border-slate-700 hover:bg-blue-700'>Sign Up</button>
 					</div>
 				</form>
 			</div>
