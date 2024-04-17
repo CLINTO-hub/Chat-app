@@ -1,11 +1,11 @@
-import {extractTime} from '../backend/utils/extractTime.js'
+
 import { useAuthContext } from "../context/AuthContext.jsx";
 import UseConversation from "../zustand/useConversation";
 
 const Message = ({ message }) => {
     const { authUser } = useAuthContext();
     const { selectedConversation } = UseConversation();
-    const formattedTime = extractTime(message.createdAt);
+    const formattedTime = (message.createdAt);
     const fromMe = message.senderId === authUser.userId;
 
     const chatClassName = fromMe ? "chat-end" : "chat-start"; // Determine chat class based on whether the message is from the current user
