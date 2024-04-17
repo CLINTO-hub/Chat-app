@@ -5,13 +5,23 @@ import UseConversation from "../zustand/useConversation";
 const Message = ({ message }) => {
     const { authUser } = useAuthContext();
     const { selectedConversation } = UseConversation();
-    const formattedTime = (message.createdAt);
+    const formattedTime = extractTime(message.createdAt);
+    console.log('mess',message.createdAt);
+    console.log('for',formattedTime);
     const fromMe = message.senderId === authUser.userId;
 
     const chatClassName = fromMe ? "chat-end" : "chat-start"; // Determine chat class based on whether the message is from the current user
     const profilePic = fromMe ? authUser.profilePic : selectedConversation?.profilePic;
     const bubbleBgColor = fromMe ? "bg-blue-500" : ""; // Set background color for bubbles of messages from the current user
     const shakeClass = message.shouldShake ? "shake" : ""
+
+
+    function extractTime(dateString) {
+        const date = new Date(dateString);
+        const hours = padZero(date.getHours());
+        const minutes = padZero(date.getMinutes());
+        return `${hours}:${minutes}`;
+    }
 
     return (
         <div className={`chat ${chatClassName}`}>
