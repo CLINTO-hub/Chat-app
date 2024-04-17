@@ -23,6 +23,11 @@ const Message = ({ message }) => {
         return `${hours}:${minutes}`;
     }
 
+    function padZero(number) {
+        return number.toString().padStart(2, "0");
+    }
+    
+
     return (
         <div className={`chat ${chatClassName}`}>
             <div className='chat-image avatar'>
